@@ -1,13 +1,35 @@
-# Snapstack
+<h1 align="center">
+  <a href="https://rorrimaesu.github.io/snapstack-pdf/">
+    <img src="./docs/readme-banner.svg" alt="Snapstack — Image to PDF Studio" width="1000">
+  </a>
+</h1>
 
-Snapstack arranges images and saves them as one PDF. Image processing happens entirely in the browser.
+<p align="center"><strong>Turn a pile of images into one PDF, in the order you choose.</strong></p>
 
-1. Drop images into **Image stack** or select **Browse files**.
-2. Drag thumbnails into order or use the up and down buttons.
-3. Enter a file name and select **Create PDF**. With **Ask where to save** selected, the browser opens a Save As dialog so you can choose a folder.
+<p align="center">
+  <a href="https://rorrimaesu.github.io/snapstack-pdf/"><strong>⚡ Open Snapstack on GitHub Pages →</strong></a>
+</p>
 
-Chrome and Edge on desktop support the Save As option. In other browsers, **Browser downloads** follows your browser settings. Enable the download prompt in those settings to choose a folder each time.
+<p align="center">🖼️ One image per page &nbsp;·&nbsp; 🗂️ Drag to reorder &nbsp;·&nbsp; 🔒 Images stay on your device</p>
 
-Snapstack accepts JPG, PNG, WebP, GIF, BMP, and AVIF files your browser can decode. Animated images use their first frame. Each PDF page follows the image's aspect ratio. Transparent areas appear white, and export resolution is capped at 3,200 pixels on the longest side.
+## From images to PDF in three steps
 
-Open `index.html` to run locally. GitHub Pages serves these same static files from the repository root.
+| Step | What to do |
+| --- | --- |
+| **01 · Add images** | Drop your files into **Image stack** or click **Browse files**. |
+| **02 · Set the order** | Drag the thumbnails into place or use the up and down arrows. |
+| **03 · Create your PDF** | Enter a file name, choose a save option, and click **Create PDF**. |
+
+## Choose where it goes
+
+On desktop Chrome or Edge, select **Ask where to save** to open a Save As dialog and pick a folder. In other browsers, **Browser downloads** uses your download settings. Turn on your browser’s download prompt to pick a folder each time.
+
+## Image formats and output
+
+**JPG · PNG · WebP · GIF · BMP · AVIF**, depending on what your browser can decode.
+
+Each page follows its image’s aspect ratio. Animated images use their first frame, transparent areas appear white, and export resolution is capped at 3,200 pixels on the longest side.
+
+## Run it locally
+
+Open `index.html` in your browser. GitHub Pages serves the same static files from the repository root.
