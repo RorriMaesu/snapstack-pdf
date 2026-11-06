@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 290" fill="none">
+  <defs>
+    <linearGradient id="back" x1="30" y1="0" x2="174" y2="200" gradientUnits="userSpaceOnUse"><stop stop-color="#ac8eff"/><stop offset="1" stop-color="#754bf5"/></linearGradient>
+    <linearGradient id="middle" x1="0" y1="0" x2="148" y2="183" gradientUnits="userSpaceOnUse"><stop stop-color="#f2eaff"/><stop offset="1" stop-color="#ad93ff"/></linearGradient>
+    <linearGradient id="sky" x1="20" y1="16" x2="121" y2="125" gradientUnits="userSpaceOnUse"><stop stop-color="#6635df"/><stop offset="1" stop-color="#b59aff"/></linearGradient>
+    <filter id="shadow" x="-40%" y="-30%" width="200%" height="190%"><feDropShadow dx="0" dy="12" stdDeviation="13" flood-color="#110734" flood-opacity=".32"/></filter>
+    <pattern id="dots" width="13" height="13" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1.1" fill="#b7a1fd" opacity=".4"/></pattern>
+  </defs>
+  <path d="M85 238c51 34 138 36 221 5 100-37 165-103 145-145-20-42-119-46-219-9-34 13-64 28-88 45" stroke="#a687fc" stroke-opacity=".42" stroke-dasharray="3 6"/>
+  <path d="M100 250c76 34 196 11 281-43 79-49 106-109 63-140" stroke="#d3bdff" stroke-opacity=".21"/>
+  <path d="M90 40h117v95H90zM355 190h100v73H355z" fill="url(#dots)"/>
+  <circle cx="420" cy="162" r="4" fill="#dffb84"/><circle cx="128" cy="210" r="4" fill="#b799ff"/><circle cx="391" cy="62" r="3" fill="#c1a6ff"/>
+  <path d="M142 71c0 10-5 15-15 15 10 0 15 5 15 15 0-10 5-15 15-15-10 0-15-5-15-15Z" fill="#def988"/>
+  <path d="M437 60c0 7-4 11-11 11 7 0 11 4 11 11 0-7 4-11 11-11-7 0-11-4-11-11Z" fill="#c8adff"/>
+  <g transform="translate(167 63) rotate(-15 74 93)" filter="url(#shadow)">
+    <rect width="149" height="188" rx="17" fill="url(#back)" stroke="#beabff"/>
+    <rect x="15" y="17" width="119" height="111" rx="9" fill="#6a43d8"/>
+    <path d="M15 109 48 79l22 18 36-45 28 26v40a10 10 0 0 1-10 10H25a10 10 0 0 1-10-10Z" fill="#bfa9ff" opacity=".72"/>
+    <path d="M17 149h63m-63 13h36" stroke="#d2c1ff" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(215 41) rotate(2 74 93)" filter="url(#shadow)">
+    <rect width="149" height="188" rx="17" fill="url(#middle)" stroke="#f3eaff"/>
+    <rect x="15" y="17" width="119" height="111" rx="9" fill="#c1a8ff"/>
+    <path d="M16 149h74m-74 13h44" stroke="#9672ef" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(263 57) rotate(17 74 93)" filter="url(#shadow)">
+    <rect width="149" height="188" rx="17" fill="#fbf8ff" stroke="white"/>
+    <rect x="14" y="14" width="121" height="118" rx="10" fill="url(#sky)"/>
+    <circle cx="101" cy="47" r="14" fill="#e3fb8d"/>
+    <path d="M14 108 49 65a5 5 0 0 1 8 0l27 33 20-22a5 5 0 0 1 8 0l23 25v21a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10Z" fill="#d6c2ff"/>
+    <path d="m14 121 38-21a9 9 0 0 1 9 0l18 12 26-16a8 8 0 0 1 8 0l22 13v13a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10Z" fill="#9b75fa"/>
+    <path d="M16 149h58m-58 14h34" stroke="#d6c9ec" stroke-width="5" stroke-linecap="round"/>
+    <rect x="86" y="144" width="46" height="27" rx="7" fill="#e2fa8a"/>
+    <text x="109" y="162" text-anchor="middle" fill="#352455" font-family="system-ui,sans-serif" font-size="12" font-weight="800">PDF</text>
+  </g>
+</svg>
