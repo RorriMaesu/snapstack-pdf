@@ -12,11 +12,16 @@ const exportButton = byId("export");
 const exportLabel = exportButton.querySelector("span");
 const stackStatus = byId("stack-status");
 const exportStatus = byId("export-status");
+const hoverPreview = byId("hover-preview");
+const hoverImage = hoverPreview?.querySelector("img");
+const previewDialog = byId("preview-dialog");
+const dialogImage = previewDialog?.querySelector("img");
 const nativeSave = typeof window.showSaveFilePicker === "function" && window.top === window;
 const pages = [];
 let nextId = 0;
 let busy = false;
 let draggedId = null;
+let hidePreviewTimer;
 
 function icon(name) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -52,6 +57,7 @@ function control(action, symbol, label, disabled) {
 }
 
 function render(focusId, focusAction) {
+  hideHoverPreview();
   const list = document.createDocumentFragment();
   for (const [index, page] of pages.entries()) {
     const row = document.createElement("li");
@@ -66,6 +72,24 @@ function render(focusId, focusAction) {
     thumb.alt = "";
     thumb.className = "thumbnail";
     thumb.draggable = false;
+    const thumbnail = document.createElement("button");
+    thumbnail.type = "button";
+    thumbnail.className = "thumbnail-button";
+    thumbnail.disabled = busy;
+    thumbnail.setAttribute("aria-label", `Preview ${page.file.name}`);
+    thumbnail.setAttribute("aria-haspopup", "dialog");
+    thumbnail.append(thumb);
+    thumbnail.addEventListener("pointerenter", event => {
+      if (event.pointerType === "mouse" && !busy && draggedId === null) showHoverPreview(page, thumbnail);
+    });
+    thumbnail.addEventListener("pointerleave", scheduleHidePreview);
+    thumbnail.addEventListener("click", () => {
+      if (!previewDialog) return;
+      hideHoverPreview();
+      byId("preview-title").textContent = page.file.name;
+      dialogImage.src = originalUrl(page);
+      previewDialog.showModal();
+    });
     const details = document.createElement("div");
     details.className = "file-details";
     const name = span("file-name", page.file.name);
@@ -78,7 +102,7 @@ function render(focusId, focusAction) {
       control("down", "chevron", `Move page ${index + 1} down`, busy || index === pages.length - 1),
       control("remove", "close", `Remove page ${index + 1}`, busy)
     );
-    row.append(grip, span("page-number", String(index + 1).padStart(2, "0")), thumb, details, controls);
+    row.append(grip, span("page-number", String(index + 1).padStart(2, "0")), previewDialog ? thumbnail : thumb, details, controls);
     list.append(row);
   }
   queue.replaceChildren(list);
@@ -92,10 +116,66 @@ function render(focusId, focusAction) {
   if (focusAction) {
     const row = queue.querySelector(`[data-id="${focusId}"]`);
     const button = row?.querySelector(`[data-action="${focusAction}"]:enabled`) ??
-      row?.querySelector("button:enabled");
+      row?.querySelector("button[data-action]:enabled");
     (button || browse).focus();
   }
 }
+
+function originalUrl(page) {
+  return page.originalUrl ??= URL.createObjectURL(page.file);
+}
+
+function hideHoverPreview() {
+  clearTimeout(hidePreviewTimer);
+  if (!hoverPreview || hoverPreview.hidden) return;
+  hoverPreview.hidden = true;
+  hoverImage.removeAttribute("src");
+}
+
+function scheduleHidePreview() {
+  clearTimeout(hidePreviewTimer);
+  hidePreviewTimer = setTimeout(hideHoverPreview, 180);
+}
+
+function showHoverPreview(page, thumbnail) {
+  if (!hoverPreview) return;
+  clearTimeout(hidePreviewTimer);
+  const bounds = thumbnail.getBoundingClientRect();
+  const viewportWidth = document.documentElement.clientWidth;
+  const viewportHeight = window.innerHeight;
+  const margin = 12;
+  const gap = 8;
+  const frame = 14; // Two 6px padding edges and two 1px borders.
+  const spaceAbove = bounds.top - margin - gap;
+  const spaceBelow = viewportHeight - bounds.bottom - margin - gap;
+  const above = spaceAbove >= spaceBelow;
+  const widthLimit = viewportWidth - 2 * margin - frame;
+  const heightLimit = Math.max(spaceAbove, spaceBelow) - frame;
+  if (widthLimit <= 0 || heightLimit <= 0) return;
+
+  const scale = Math.min(1, widthLimit / page.width, heightLimit / page.height);
+  const width = Math.max(1, Math.floor(page.width * scale));
+  const height = Math.max(1, Math.floor(page.height * scale));
+  const centeredLeft = bounds.left + (bounds.width - width - frame) / 2;
+  const left = Math.max(margin, Math.min(centeredLeft, viewportWidth - margin - width - frame));
+  const top = above ? bounds.top - gap - height - frame : bounds.bottom + gap;
+  hoverPreview.style.left = `${left}px`;
+  hoverPreview.style.top = `${top}px`;
+  hoverImage.width = width;
+  hoverImage.height = height;
+  hoverImage.src = originalUrl(page);
+  hoverPreview.hidden = false;
+}
+
+hoverPreview?.addEventListener("pointerenter", () => clearTimeout(hidePreviewTimer));
+hoverPreview?.addEventListener("pointerleave", scheduleHidePreview);
+window.addEventListener("scroll", hideHoverPreview, { passive: true });
+window.addEventListener("resize", hideHoverPreview);
+window.addEventListener("keydown", event => {
+  if (event.key === "Escape") hideHoverPreview();
+});
+byId("close-preview")?.addEventListener("click", () => previewDialog.close());
+previewDialog?.addEventListener("close", () => dialogImage.removeAttribute("src"));
 
 async function preview(file) {
   const bitmap = await createImageBitmap(file);
@@ -193,6 +273,7 @@ queue.addEventListener("click", event => {
   if (action === "remove") {
     const [removed] = pages.splice(index, 1);
     URL.revokeObjectURL(removed.url);
+    if (removed.originalUrl) URL.revokeObjectURL(removed.originalUrl);
     render(pages[index]?.id ?? pages.at(-1)?.id, action);
     status(stackStatus, `Removed ${removed.file.name}.`);
     status(exportStatus);
@@ -223,6 +304,7 @@ queue.addEventListener("dragstart", event => {
     return;
   }
   draggedId = Number(row.dataset.id);
+  hideHoverPreview();
   event.dataTransfer.effectAllowed = "move";
   event.dataTransfer.setData("text/plain", String(draggedId));
   row.classList.add("dragging");

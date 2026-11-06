@@ -67,7 +67,20 @@ h1 em { font-style: normal; color: #e3fc8d; }
 .grip { display: inline-flex; color: #8c79a6; }
 .grip .icon { width: 15px; height: 15px; }
 .page-number { flex: none; text-align: center; min-width: 22px; font-size: 11px; color: #61458a; font-weight: 800; }
-.thumbnail { flex: none; width: 44px; height: 38px; object-fit: cover; border-radius: 6px; border: 1px solid #dfd5ed; background: #efe9f7; }
+.thumbnail-button { flex: none; display: block; padding: 0; border: 0; border-radius: 6px; background: none; }
+.thumbnail-button:enabled { cursor: zoom-in; }
+.thumbnail { display: block; width: 44px; height: 38px; object-fit: cover; border-radius: 6px; border: 1px solid #dfd5ed; background: #efe9f7; }
+.thumbnail-button:hover:enabled .thumbnail { border-color: #7950ed; }
+.hover-preview, .preview-dialog { border: 1px solid #e3d8f2; background: #fff; border-radius: 14px; box-shadow: 0 14px 50px #25133f3d; }
+.hover-preview { position: fixed; z-index: 10; padding: 6px; }
+.hover-preview img, .preview-image { display: block; border-radius: 8px; background: #f5f0fa; }
+.preview-dialog { width: max-content; max-width: calc(100% - 24px); padding: 12px; color: var(--ink); }
+.preview-dialog::backdrop { background: #211334c9; }
+.preview-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.preview-heading h2 { max-width: min(500px, calc(100vw - 105px)); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 15px; }
+.preview-heading button { display: grid; place-items: center; flex: none; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 8px; background: #f0eaff; color: #592cbe; }
+.preview-heading button:hover { background: #e9dcff; }
+.preview-image { margin-inline: auto; max-width: calc(100vw - 52px); max-height: calc(100dvh - 94px); object-fit: contain; }
 .file-details { flex: 1; min-width: 0; }
 .file-name { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 750; }
 .dimensions { display: block; color: var(--muted); font-size: 11px; margin-top: 2px; }

@@ -20,6 +20,8 @@
 | **02 · Set the order** | Drag the thumbnails into place or use the up and down arrows. |
 | **03 · Create your PDF** | Enter a file name, choose a save option, and click **Create PDF**. |
 
+Hover over a thumbnail for a full-resolution preview that fits the screen. Click or tap the thumbnail to keep the preview open.
+
 ## Choose where it goes
 
 On desktop Chrome or Edge, select **Ask where to save** to open a Save As dialog and pick a folder. In other browsers, **Browser downloads** uses your download settings. Turn on your browser’s download prompt to pick a folder each time.
